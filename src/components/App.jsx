@@ -16,7 +16,7 @@ export const App = () => {
   const [totalPage, setTotalPage] = useState(1);
 
   const onSearchFilter = ({ value }) => {
-    setSearchQuery({ searchQuery: value });
+    setSearchQuery( value );
 
     if (searchQuery === value) {
       return;
@@ -31,7 +31,7 @@ export const App = () => {
   };
 
   const onLoadMore = () => {
-    setPage(prevState => ({ page: prevState + 1 }));
+    setPage(prevState => ( prevState + 1 ));
   };
 
   const onFetchImages = async () => {
@@ -51,9 +51,9 @@ export const App = () => {
 
   useEffect(() => {
     if (!searchQuery) return;
-    console.log(onFetchImages());
+   
     onFetchImages();
-  }, [searchQuery, page]);
+  }, [searchQuery, page, totalPage]);
 
   return (
     <div>

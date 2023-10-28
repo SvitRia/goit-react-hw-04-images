@@ -1,6 +1,6 @@
 import { Modalbox } from 'components/Modal/Modal';
 import { useState } from 'react'
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 import { HiOutlineX } from 'react-icons/hi';
 import {
   GallaryItem,
@@ -10,7 +10,7 @@ import {
   BtnClose
 } from './ImageGalleryItem.styled';
 
-Modal.setAppElement('#root');
+// Modal.setAppElement('#root');
 
 export const GalleryItem = (miniImg, originalImg, tags) => {
   
@@ -36,7 +36,7 @@ export const GalleryItem = (miniImg, originalImg, tags) => {
 
           <ModalStyle  isOpen={isOpenModal} onRequestClose={closeModal} >
             <ModalStyleContent >
-              <Modalbox largeImg={originalImg} alt={tags} />
+              <Modalbox isOpenModal={isOpenModal} largeImg={originalImg} alt={tags} onRequestClose={closeModal} />
               <BtnClose onClick={closeModal} ><HiOutlineX /></BtnClose>
             </ModalStyleContent>
              

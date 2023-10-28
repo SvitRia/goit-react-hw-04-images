@@ -13,10 +13,10 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export const Modalbox = ({ largeImg, alt, isModalOpen, closeModal }) => {
+export const Modalbox = ({ largeImg, alt, isOpenModal, closeModal }) => {
   return (
     <Modal>
-      isOpen={isModalOpen}
+      isOpen={isOpenModal}
       style={customStyles}
       <img src={largeImg} alt={alt} width="850" height="600" />
       contentLabel={alt}
