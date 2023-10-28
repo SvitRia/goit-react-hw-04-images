@@ -1,84 +1,74 @@
-import { Component } from 'react'
-import { SearchForm } from 'components/Searchbar/Searchbar'
-import { GallaryList } from './ImageGallery/ImageGallery'
-import { ButtonLoading } from './Button/Button'
-import { Loader } from './Loader/Loader'
-import { fetchImages } from 'api'
+import { SearchForm } from 'components/Searchbar/Searchbar';
+import { GallaryList } from './ImageGallery/ImageGallery';
+import { ButtonLoading } from './Button/Button';
+import { Loader } from './Loader/Loader';
+import { fetchImages } from 'api';
+import { useState, useEffect } from 'react';
+import { Text } from './Text.styled';
 
+export const App = () => {
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false
+  // );
+  const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
+  const onSearchFilter = ({ value }) => {
+    setSearchQuery({ searchQuery: value });
 
-export class App extends Component {
-  state = {
-    galleryItems: [],
-    loading: false,
-    error: false,
-    query: "",
-    page: 1,
-    totalPage: 1,
-  };
-
-  onSearchFilter = ({value}) => {
-    this.setState({ query: value });
-
-    if (this.state.query === value) {
+    if (searchQuery === value) {
       return;
-    } 
-    this.setState({
-      
-        galleryItems: [],
-        page: 1,
-        error: false
-      });
     }
-
-  resetFilters = () => {
-    this.setState({
-      query: ''
-    });
+    setGalleryItems([]);
+    setPage(1);
+    //    setError({error:false})
   };
 
-  onLoadMore = () => {
-    this.setState(prevState => ({page: this.state.page + 1 }));
-  }
+  const resetFilters = () => {
+    setSearchQuery('');
+  };
 
-  async componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query || prevState.page !== this.state.page) {
-      this.setState({ loading: true, });
-      // HTTP запрос с SetState
-      try {
-        const result = await fetchImages(this.state.query, this.state.page);
-        const { totalHits, hits } = result;
-        const allPages = Math.ceil(totalHits / 12);
-        this.setState(
-          prevState =>
-            ({ galleryItems: [...prevState.galleryItems,  ...hits ] })
-        );
+  const onLoadMore = () => {
+    setPage(prevState => ({ page: prevState + 1 }));
+  };
 
-        this.setState(
-          {
-            totalPage: allPages,
-          });
-         
-      } catch (error) {
-      this.setState({ error: true });
+  const onFetchImages = async () => {
+    setLoading(true);
+    try {
+      const result = await fetchImages({ searchQuery, page });
+      console.log(result);
+      const { totalHits, hits } = result;
+      setTotalPage(Math.ceil(totalHits / 12));
+      setGalleryItems(prevImg => [...prevImg, ...hits]);
+    } catch (error) {
+      alert(error.message);
     } finally {
-      this.setState({ loading: false });
-      }
-      };
-    };
-  
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    if (!searchQuery) return;
+    console.log(onFetchImages());
+    onFetchImages();
+  }, [searchQuery, page]);
 
-  render() {
-    const {query, galleryItems, loading, page, totalPage } = this.state
-    return (
-      <div>
-        <SearchForm value={query} onChangeFilter={this.onSearchFilter}
-        resetFilter={this.resetFilters}/>
-        {galleryItems.length > 0 && <GallaryList items={galleryItems} />}
-        {loading && <Loader/>} 
-      
-        {(page > 0 && page < totalPage) &&<ButtonLoading onClick={this.onLoadMore} />}
-      </div>  );
-};
+  return (
+    <div>
+      <SearchForm
+        value={searchQuery}
+        onChangeFilter={onSearchFilter}
+        resetFilter={resetFilters}
+      />
+      {galleryItems.length > 0 && <GallaryList items={galleryItems} />}
+      {loading && <Loader />}
+
+      {page > 0 && page < totalPage && <ButtonLoading onClick={onLoadMore} />}
+      {galleryItems.length === 0 && (
+        <Text>Sorry. There are no images ... 😭</Text>
+      )}
+    </div>
+  );
 };

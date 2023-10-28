@@ -1,5 +1,5 @@
 import { Modalbox } from 'components/Modal/Modal';
-import { Component } from 'react';
+import { useState } from 'react'
 import Modal from 'react-modal';
 import { HiOutlineX } from 'react-icons/hi';
 import {
@@ -11,22 +11,18 @@ import {
 } from './ImageGalleryItem.styled';
 
 Modal.setAppElement('#root');
-export class GalleryItem extends Component {
-  state = {
-    isOpenModal: false,
+
+export const GalleryItem = (miniImg, originalImg, tags) => {
+  
+  const [isOpenModal, setOpenModal] = useState(false);
+
+  const openModal = () => {
+    setOpenModal( true );
   };
 
-  openModal = () => {
-    this.setState({ isOpenModal: true });
+  const closeModal = () => {
+    setOpenModal(false);
   };
-
-  closeModal = () => {
-    this.setState({ isOpenModal: false });
-  };
-
-  render() {
-     const { isOpenModal } = this.state;
-    const { miniImg, originalImg, tags} = this.props;
 
     return (
       <>
@@ -34,14 +30,14 @@ export class GalleryItem extends Component {
           <GallaryImage
             src={miniImg}
             alt={tags}
-            onClick={this.openModal}
+            onClick={openModal}
             width="300"
           />
 
-          <ModalStyle  isOpen={isOpenModal} onRequestClose={this.closeModal} >
+          <ModalStyle  isOpen={isOpenModal} onRequestClose={closeModal} >
             <ModalStyleContent >
               <Modalbox largeImg={originalImg} alt={tags} />
-              <BtnClose onClick={this.closeModal} ><HiOutlineX /></BtnClose>
+              <BtnClose onClick={closeModal} ><HiOutlineX /></BtnClose>
             </ModalStyleContent>
              
           </ModalStyle>
@@ -49,6 +45,6 @@ export class GalleryItem extends Component {
       </>
     );
   }
-}
+
 
 
