@@ -1,5 +1,5 @@
 import Modal from 'react-modal';
-
+import { ModalStyle } from 'components/ImageGalleryItem/ImageGalleryItem.styled';
 const customStyles = {
   content: {
     top: '50%',
@@ -13,14 +13,14 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export const Modalbox = ({ largeImg, alt, isOpenModal, closeModal }) => {
+export const ModalBox = ({ isModalOpen, large, alt, onCloseModal }) => {
   return (
-    <Modal>
-      isOpen={isOpenModal}
+    <ModalStyle>
+      isOpen={isModalOpen}
       style={customStyles}
-      <img src={largeImg} alt={alt} width="850" height="600" />
+      <img src={large} alt={alt} width="850" height="600" />
       contentLabel={alt}
-      onRequestClose={closeModal}
-    </Modal>
+      onRequestClose={onCloseModal}
+    </ModalStyle>
   );
 };

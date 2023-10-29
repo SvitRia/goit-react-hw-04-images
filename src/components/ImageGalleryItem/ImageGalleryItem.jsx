@@ -1,18 +1,18 @@
-import { Modalbox } from 'components/Modal/Modal';
+import { ModalBox } from 'components/Modal/Modal';
 import { useState } from 'react'
 // import Modal from 'react-modal';
-import { HiOutlineX } from 'react-icons/hi';
+//  import { HiOutlineX } from 'react-icons/hi';
 import {
   GallaryItem,
   GallaryImage,
-  ModalStyle,
-  ModalStyleContent,
-  BtnClose
+
+  // ModalStyleContent,
+  //  BtnClose
 } from './ImageGalleryItem.styled';
 
 // Modal.setAppElement('#root');
 
-export const GalleryItem = (miniImg, originalImg, tags) => {
+export const GalleryItem = ({ mini, large, alt }) => {
   
   const [isOpenModal, setOpenModal] = useState(false);
 
@@ -28,19 +28,19 @@ export const GalleryItem = (miniImg, originalImg, tags) => {
       <>
         <GallaryItem >
           <GallaryImage
-            src={miniImg}
-            alt={tags}
+            src={mini}
+            alt={alt}
             onClick={openModal}
             width="300"
           />
-
-          <ModalStyle  isOpen={isOpenModal} onRequestClose={closeModal} >
-            <ModalStyleContent >
-              <Modalbox isOpenModal={isOpenModal} largeImg={originalImg} alt={tags} onRequestClose={closeModal} />
-              <BtnClose onClick={closeModal} ><HiOutlineX /></BtnClose>
-            </ModalStyleContent>
-             
-          </ModalStyle>
+           {/* <ModalStyle isOpen={isOpenModal} onRequestClose={closeModal} > */}
+          {/* <ModalStyleContent >  */}
+          
+          {isOpenModal && <ModalBox isModalOpen={isOpenModal} large={large} alt={alt} onCloseModal={closeModal} />}
+          
+             {/* <BtnClose onClick={closeModal} ><HiOutlineX /></BtnClose>
+            </ModalStyleContent> */}
+              {/* </ModalStyle> */}
         </GallaryItem>
       </>
     );

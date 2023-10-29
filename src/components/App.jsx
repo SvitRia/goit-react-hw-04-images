@@ -37,7 +37,7 @@ export const App = () => {
   const onFetchImages = async () => {
     setLoading(true);
     try {
-      const result = await fetchImages({ searchQuery, page });
+      const result = await fetchImages( searchQuery, page );
       console.log(result);
       const { totalHits, hits } = result;
       setTotalPage(Math.ceil(totalHits / 12));
@@ -50,11 +50,12 @@ export const App = () => {
   };
 
   useEffect(() => {
-    if (!searchQuery) return;
+    if (!searchQuery) return
    
-    onFetchImages();
-  }, [searchQuery, page, totalPage]);
-
+    onFetchImages()
+  }, [searchQuery, page,]);
+    
+console.log(galleryItems)
   return (
     <div>
       <SearchForm
@@ -62,7 +63,8 @@ export const App = () => {
         onChangeFilter={onSearchFilter}
         resetFilter={resetFilters}
       />
-      {galleryItems.length > 0 && <GallaryList items={galleryItems} />}
+          {galleryItems.length > 0 && <GallaryList items={galleryItems} />}
+          
       {loading && <Loader />}
 
       {page > 0 && page < totalPage && <ButtonLoading onClick={onLoadMore} />}

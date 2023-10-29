@@ -8,7 +8,7 @@ export const GallaryList = ({items}) => {
             {items.map(item => {
                 return (
                     <li key={item.id}>
-                        <GalleryItem miniImg={item.webformatURL} originalImg={item.largeImageURL} tags={item.tags} />
+                        <GalleryItem mini={item.webformatURL} large={item.largeImageURL} alt={item.tags} />
                     </li>)
             })
             }
