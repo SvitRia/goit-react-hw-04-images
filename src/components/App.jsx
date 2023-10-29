@@ -34,7 +34,7 @@ export const App = () => {
     setPage(prevState => ( prevState + 1 ));
   };
 
-  const onFetchImages = async () => {
+  const fetchGalleryImages = async () => {
     setLoading(true);
     try {
       const result = await fetchImages( searchQuery, page );
@@ -48,11 +48,12 @@ export const App = () => {
     }
   };
 
-  useEffect(() => {
-    if (!searchQuery) return
+    useEffect(() => {
+        if (!searchQuery) return;
    
-    onFetchImages()
-  }, [searchQuery, page,]);
+        fetchGalleryImages();
+    }, [searchQuery, page]
+    );
 
   return (
     <div>
