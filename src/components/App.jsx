@@ -38,10 +38,9 @@ export const App = () => {
     setLoading(true);
     try {
       const result = await fetchImages( searchQuery, page );
-      console.log(result);
       const { totalHits, hits } = result;
       setTotalPage(Math.ceil(totalHits / 12));
-      setGalleryItems(prevImg => [...prevImg, ...hits]);
+      setGalleryItems(prevState => [...prevState, ...hits]);
     } catch (error) {
       alert(error.message);
     } finally {
@@ -54,8 +53,7 @@ export const App = () => {
    
     onFetchImages()
   }, [searchQuery, page,]);
-    
-console.log(galleryItems)
+
   return (
     <div>
       <SearchForm

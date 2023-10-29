@@ -15,12 +15,12 @@ Modal.setAppElement('#root');
 
 export const ModalBox = ({ isModalOpen, large, alt, onCloseModal }) => {
   return (
-    <ModalStyle>
+    <ModalStyle
       isOpen={isModalOpen}
       style={customStyles}
-      <img src={large} alt={alt} width="850" height="600" />
       contentLabel={alt}
-      onRequestClose={onCloseModal}
+      onRequestClose={onCloseModal}>
+       <img src={large} alt={alt} width="850" height="600" />
     </ModalStyle>
   );
 };
