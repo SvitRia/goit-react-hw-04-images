@@ -49,7 +49,7 @@ export const App = () => {
   };
 
     useEffect(() => {
-        if (!searchQuery) return;
+        if (!searchQuery) { return };
    
         fetchGalleryImages();
     }, [searchQuery, page]
